@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <div className="App">
+          {/* Add a SearchBar component */}
+          <div className="App-playlist">
+          {/* Add a SearchResults component */}
+          {/* Add a Playlist component */}
+          </div>
+        </div>
       </div>
     );
   }
