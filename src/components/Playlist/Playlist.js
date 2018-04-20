@@ -10,6 +10,6 @@ export class Playlist extends React.Component {
         <TrackList />
         <a className="Playlist-save">SAVE TO SPOTIFY</a>
       </div>
-    )
+    );
   }
 }
