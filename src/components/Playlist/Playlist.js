@@ -7,7 +7,7 @@ export const Playlist = props => {
   return (
     <div className="Playlist">
       <input value="New Playlist" />
-      <TrackList tracks={props.playlistTracks}/>
+      <TrackList tracks={props.playlistTracks} isRemoval={true}/>
       <a className="Playlist-save">SAVE TO SPOTIFY</a>
     </div>
   );

@@ -3,6 +3,20 @@ import PropTypes from 'prop-types';
 import './Track.css';
 
 export class Track extends React.Component {
+  constructor(props) {
+    super(props);
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack() {
+    this.props.onAdd(this.props.track);
+  }
+
+  // Use isRemoval prop to determine whether to render a + or -
+  plusMinus() {
+    return this.props.isRemoval ? <a className="Track-action">-</a> : <a className="Track-action" onClick={this.addTrack}>+</a>;
+  }
+
   render() {
     return (
       <div className="Track">
@@ -10,12 +24,14 @@ export class Track extends React.Component {
           <h3>{this.props.track.name}</h3>
           <p>{this.props.track.artist} | {this.props.track.album}</p>
         </div>
-        <a className="Track-action">{/* <!-- + or - will go here --> */}</a>
+        {this.plusMinus()}
       </div>
     );
   }
 }
 
 Track.propTypes = {
-  track: PropTypes.object.isRequired
+  track: PropTypes.object.isRequired,
+  onAdd: PropTypes.func.isRequired,
+  isRemoval: PropTypes.bool.isRequired
 };
