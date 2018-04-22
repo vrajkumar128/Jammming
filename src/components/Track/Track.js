@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Track.css';
 
 export class Track extends React.Component {
@@ -14,3 +15,7 @@ export class Track extends React.Component {
     );
   }
 }
+
+Track.propTypes = {
+  track: PropTypes.object.isRequired
+};
