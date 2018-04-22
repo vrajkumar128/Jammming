@@ -7,12 +7,13 @@ export const Playlist = props => {
   return (
     <div className="Playlist">
       <input value="New Playlist" />
-      <TrackList tracks={props.playlistTracks} isRemoval={true}/>
+      <TrackList tracks={props.playlistTracks} onRemove={props.removeTrack} isRemoval={true}/>
       <a className="Playlist-save">SAVE TO SPOTIFY</a>
     </div>
   );
 };
 
 Playlist.propTypes = {
-  tracks: PropTypes.array.isRequired
+  tracks: PropTypes.array.isRequired,
+  onRemove: PropTypes.func.isRequired
 }
