@@ -9,10 +9,12 @@ export class Track extends React.Component {
     this.removeTrack = this.removeTrack.bind(this);
   }
 
+  // Add track to playlist
   addTrack() {
     this.props.onAdd(this.props.track);
   }
 
+  // Remove track from playlist
   removeTrack() {
     this.props.onRemove(this.props.track);
   }

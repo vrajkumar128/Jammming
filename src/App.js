@@ -32,8 +32,17 @@ class App extends React.Component {
 
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   }
 
+  // Trigger search when user presses Enter
+  handleKeyPress(e) {
+    if (e.keyCode === 13) {
+      document.getElementById('search').click();
+    }
+  }
+
+  // Update state to reflect adding a new track to playlist
   addTrack(track) {
     let playlistTracks = this.state.playlistTracks;
     if (playlistTracks.find(playlistTrack => playlistTrack.id === track.id)) {
@@ -46,6 +55,7 @@ class App extends React.Component {
     }
   }
 
+  // Update state to reflect removing a track from playlist
   removeTrack(track) {
     let filteredPlaylistTracks = this.state.playlistTracks.filter(playlistTrack => playlistTrack.id !== track.id);
     this.setState({
@@ -53,15 +63,22 @@ class App extends React.Component {
     });
   }
 
+  // Update state to reflect new playlist name
+  updatePlaylistName(newName) {
+    this.setState({
+      playlistName: newName
+    })
+  }
+
   render() {
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar />
+          <SearchBar onKeyPress={this.handleKeyPress} />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} />
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} />
           </div>
         </div>
       </div>
