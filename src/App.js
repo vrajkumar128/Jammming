@@ -9,26 +9,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: [{
-          name: "Breathing",
-          artist: "Yellowcard",
-          album: "Ocean Avenue",
-          id: 2
-        },
-        {
-          name: "Ocean Avenue",
-          artist: "Yellowcard",
-          album: "Ocean Avenue",
-          id: 3
-        }
-      ],
+      searchResults: [],
       playlistName: "New Playlist",
-      playlistTracks: [{
-        name: "Empty Apartment",
-        artist: "Yellowcard",
-        album: "Ocean Avenue",
-        id: 4
-      }]
+      playlistTracks: []
     };
 
     this.addTrack = this.addTrack.bind(this);
@@ -72,12 +55,17 @@ class App extends React.Component {
     this.state.playlistTracks.forEach(track => {
       trackUris.push(track.uri);
     });
-    return trackUris;
+    Spotify.savePlaylist(this.state.playlistName, trackUris);
+    this.setState({
+      playlistName: 'New Playlist',
+      playlistTracks: []
+    })
   }
 
   // Query the Spotify API and update state with results
-  search(term) {
-    let searchResults = Spotify.search(term);
+  async search(term) {
+    let searchResults = await Spotify.search(term);
+    console.log(searchResults);
     this.setState({
       searchResults: searchResults
     });

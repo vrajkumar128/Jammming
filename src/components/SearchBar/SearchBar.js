@@ -8,6 +8,7 @@ export class SearchBar extends React.Component {
     this.state = {
       searchInput: ''
     }
+    this.search = this.search.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
   }
 
@@ -18,7 +19,9 @@ export class SearchBar extends React.Component {
 
   // Update state to reflect search input
   handleTermChange(e) {
-    this.setState(e.target.value);
+    this.setState({
+      searchInput: e.target.value
+    });
   }
 
   // Trigger search when user presses Enter
