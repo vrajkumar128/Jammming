@@ -16,9 +16,9 @@ export class Playlist extends React.Component {
   render() {
     return (
       <div className="Playlist">
-        <input value="New Playlist" onChange={this.handleNameChange} />
-        <TrackList tracks={this.props.playlistTracks} onRemove={this.props.removeTrack} isRemoval={true} />
-        <a className="Playlist-save">SAVE TO SPOTIFY</a>
+        <input value={this.props.playlistName} onChange={this.handleNameChange} />
+        <TrackList tracks={this.props.playlistTracks} onRemove={this.props.onRemove} isRemoval={true} />
+        <a className="Playlist-save" onClick={this.props.onSave}>SAVE TO SPOTIFY</a>
       </div>
     );
   }
@@ -26,6 +26,8 @@ export class Playlist extends React.Component {
 
 Playlist.propTypes = {
   onNameChange: PropTypes.func.isRequired,
+  playlistName: PropTypes.string.isRequired,
   playlistTracks: PropTypes.array.isRequired,
-  removeTrack: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired
 }

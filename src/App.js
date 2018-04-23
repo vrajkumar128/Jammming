@@ -33,13 +33,8 @@ class App extends React.Component {
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
-  }
-
-  // Trigger search when user presses Enter
-  handleKeyPress(e) {
-    if (e.keyCode === 13) {
-      document.getElementById('search').click();
-    }
+    this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
 
   // Update state to reflect adding a new track to playlist
@@ -70,15 +65,29 @@ class App extends React.Component {
     })
   }
 
+  // Save playlist to Spotify account
+  savePlaylist() {
+    let trackUris = [];
+    this.state.playlistTracks.forEach(track => {
+      trackUris.push(track.uri);
+    });
+    return trackUris;
+  }
+
+  // Queries the Spotify API
+  search(term) {
+    console.log(term);
+  }
+
   render() {
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar onKeyPress={this.handleKeyPress} />
+          <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} />
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />
           </div>
         </div>
       </div>
