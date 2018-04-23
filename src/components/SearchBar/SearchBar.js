@@ -11,11 +11,12 @@ export class SearchBar extends React.Component {
     this.handleTermChange = this.handleTermChange.bind(this);
   }
 
+  // Search Spotify API with value entered into search bar
   search() {
     this.props.onSearch(this.state.searchInput);
   }
 
-  // Updates state to reflect search input
+  // Update state to reflect search input
   handleTermChange(e) {
     this.setState(e.target.value);
   }

@@ -3,6 +3,7 @@ import './App.css';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { SearchResults } from './components/SearchResults/SearchResults';
 import { Playlist } from './components/Playlist/Playlist';
+import { Spotify } from './util/Spotify';
 
 class App extends React.Component {
   constructor(props) {
@@ -74,9 +75,12 @@ class App extends React.Component {
     return trackUris;
   }
 
-  // Queries the Spotify API
+  // Query the Spotify API and update state with results
   search(term) {
-    console.log(term);
+    let searchResults = Spotify.search(term);
+    this.setState({
+      searchResults: searchResults
+    });
   }
 
   render() {
