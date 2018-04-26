@@ -2,10 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
   width: 37%;
-  max-height: 950px;
-  padding: 2.27rem 1.16rem;
+  padding: 0.45rem 1.16rem;
   background-color: rgba(1, 12, 63, 0.7);
   box-shadow: 0 4px 2px 2px #000000;
 }
@@ -21,12 +19,30 @@
   color: #fff;
 }
 
+.Playlist-tracks {
+  width: 100%;
+  margin-top: 1rem;
+  height: 90%;
+  overflow-y: auto;
+}
+
+.Playlist-tracks::-webkit-scrollbar {
+  margin-left: 0.5rem;
+  width: 5px;
+  background: transparent;
+}
+
+.Playlist-tracks::-webkit-scrollbar-thumb {
+  background: #6c41ec;
+  border-radius: 5px;
+}
+
 .Playlist-save {
   cursor: pointer;
   width: 10rem;
   padding: .77rem 0;
   border-radius: 54px;
-  margin-top: 1.27rem;
+  margin: 0.75rem 0;
   background-color: #6c41ec;
   text-align: center;
   font-size: .83rem;
@@ -35,11 +51,6 @@
 
 .Playlist-save:hover {
   background-color: rgba(108, 65, 233, .7);
-}
-
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
 }
 
 @media only screen and (max-width: 1020px) {

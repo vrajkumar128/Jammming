@@ -21,6 +21,10 @@
   outline: none;
 }
 
+.SearchBar input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
 .SearchBar a {
   cursor: pointer;
   width: 8.11rem;

@@ -2,23 +2,42 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Playlist.css';
 import { TrackList } from '../TrackList/TrackList';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 export class Playlist extends React.Component {
   constructor(props) {
     super(props);
-    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  // Update parent component's state with new playlist name
-  handleNameChange(e) {
-    this.props.onNameChange(e.target.value);
+  // Update parent's state with new playlist name
+  handleChange(e) {
+    this.props.onChange(e.target.value);
+  }
+
+  onDragEnd = () => {
+    // the only one that is required
   }
 
   render() {
     return (
       <div className="Playlist">
-        <input value={this.props.playlistName} onChange={this.handleNameChange} />
-        <TrackList tracks={this.props.playlistTracks} onRemove={this.props.onRemove} isRemoval={true} />
+        <input type="text"
+          value={this.props.playlistName}
+          placeholder={this.props.playlistPlaceholder}
+          onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
+          onChange={this.handleChange}
+        />
+        <div className="Playlist-tracks">
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <TrackList
+              tracks={this.props.playlistTracks}
+              onRemove={this.props.onRemove}
+              isRemoval={true}
+            />
+          </DragDropContext>
+        </div>
         <a className="Playlist-save" onClick={this.props.onSave}>SAVE TO SPOTIFY</a>
       </div>
     );
@@ -26,7 +45,9 @@ export class Playlist extends React.Component {
 }
 
 Playlist.propTypes = {
-  onNameChange: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   playlistName: PropTypes.string.isRequired,
   playlistTracks: PropTypes.array.isRequired,
   onRemove: PropTypes.func.isRequired,

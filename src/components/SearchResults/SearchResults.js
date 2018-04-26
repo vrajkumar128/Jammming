@@ -6,8 +6,11 @@ import { TrackList } from '../TrackList/TrackList';
 export const SearchResults = props => {
   return (
     <div className="SearchResults">
-      <h2>Results</h2>
-      <TrackList tracks={props.searchResults} onAdd={props.onAdd} isRemoval={false}/>
+      <h2>Search Results</h2>
+      {props.searchResults.length ? <span onClick={props.onClear}>Clear</span> : ''}
+      <div className="Results">
+        <TrackList tracks={props.searchResults} onAdd={props.onAdd} isRemoval={false} />
+      </div>
     </div>
   );
 };

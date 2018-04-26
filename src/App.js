@@ -9,16 +9,39 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchPlaceholder: "Enter A Song, Album, or Artist",
+      searchInput: '',
       searchResults: [],
-      playlistName: "New Playlist",
+      playlistNamePlaceholder: "Playlist name",
+      playlistName: "",
       playlistTracks: []
     };
 
+    this.updateSearchInput = this.updateSearchInput.bind(this);
+    this.search = this.search.bind(this);
+    this.clearSearchResults = this.clearSearchResults.bind(this);
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.clearPlaylistNamePlaceholder = this.clearPlaylistNamePlaceholder.bind(this);
+    this.restorePlaylistNamePlaceholder = this.restorePlaylistNamePlaceholder.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
-    this.search = this.search.bind(this);
+  }
+
+  // Update state to reflect search input
+  updateSearchInput(newInput) {
+    this.setState({
+      searchInput: newInput
+    });
+  }
+
+  // Query the Spotify API and update state with results
+  async search(term) {
+    let searchResults = await Spotify.search(term);
+    console.log(searchResults);
+    this.setState({
+      searchResults: searchResults
+    });
   }
 
   // Update state to reflect adding a new track to playlist
@@ -42,6 +65,27 @@ class App extends React.Component {
     });
   }
 
+  // Update state to reflect clearing search results
+  clearSearchResults() {
+    this.setState({
+      searchResults: []
+    })
+  }
+
+  // Update state to reflect focusing playlist name field
+  clearPlaylistNamePlaceholder() {
+    this.setState({
+      playlistNamePlaceholder: ""
+    })
+  }
+
+  // Update state to reflect blurring playlist name field
+  restorePlaylistNamePlaceholder() {
+    this.setState({
+      playlistNamePlaceholder: "Playlist name"
+    })
+  }
+
   // Update state to reflect new playlist name
   updatePlaylistName(newName) {
     this.setState({
@@ -49,26 +93,28 @@ class App extends React.Component {
     })
   }
 
-  // Save playlist to Spotify account
+  // Save playlist to Spotify account and reset state
   savePlaylist() {
     let trackUris = [];
     this.state.playlistTracks.forEach(track => {
       trackUris.push(track.uri);
     });
-    Spotify.savePlaylist(this.state.playlistName, trackUris);
-    this.setState({
-      playlistName: 'New Playlist',
-      playlistTracks: []
-    })
-  }
-
-  // Query the Spotify API and update state with results
-  async search(term) {
-    let searchResults = await Spotify.search(term);
-    console.log(searchResults);
-    this.setState({
-      searchResults: searchResults
-    });
+    if (!this.state.playlistName.length) {
+      Spotify.savePlaylist("New Playlist", trackUris);
+      this.setState({
+        searchInput: '',
+        searchResults: [],
+        playlistTracks: []
+      });
+    } else {
+      Spotify.savePlaylist(this.state.playlistName, trackUris);
+      this.setState({
+        searchInput: '',
+        searchResults: [],
+        playlistName: "",
+        playlistTracks: []
+      });
+    }
   }
 
   render() {
@@ -76,10 +122,28 @@ class App extends React.Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar onSearch={this.search} />
+          <SearchBar
+            searchPlaceholder={this.state.searchPlaceholder}
+            searchInput={this.state.searchInput}
+            onChange={this.updateSearchInput}
+            onSearch={this.search}
+          />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />
+            <SearchResults
+              searchResults={this.state.searchResults}
+              onClear={this.clearSearchResults}
+              onAdd={this.addTrack}
+            />
+            <Playlist
+              playlistPlaceholder={this.state.playlistNamePlaceholder}
+              onFocus={this.clearPlaylistNamePlaceholder}
+              onBlur={this.restorePlaylistNamePlaceholder}
+              playlistName={this.state.playlistName}
+              onChange={this.updatePlaylistName}
+              playlistTracks={this.state.playlistTracks}
+              onRemove={this.removeTrack}
+              onSave={this.savePlaylist}
+            />
           </div>
         </div>
       </div>
