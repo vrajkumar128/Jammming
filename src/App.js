@@ -71,29 +71,30 @@ class App extends React.Component {
   // Update state to reflect clearing search results
   clearSearchResults() {
     this.setState({
-      searchResults: []
-    })
+      searchResults: [],
+      searchInput: ''
+    });
   }
 
   // Update state to reflect focusing playlist name field
   clearPlaylistNamePlaceholder() {
     this.setState({
       playlistNamePlaceholder: ""
-    })
+    });
   }
 
   // Update state to reflect blurring playlist name field
   restorePlaylistNamePlaceholder() {
     this.setState({
       playlistNamePlaceholder: "Playlist name"
-    })
+    });
   }
 
   // Update state to reflect new playlist name
   updatePlaylistName(newName) {
     this.setState({
       playlistName: newName
-    })
+    });
   }
 
   // Save playlist to Spotify account and reset state
