@@ -37,6 +37,9 @@ class App extends React.Component {
 
   // Query the Spotify API and update state with results
   async search(term) {
+    this.setState({
+      searchResults: []
+    });
     let searchResults = await Spotify.search(term);
     console.log(searchResults);
     this.setState({

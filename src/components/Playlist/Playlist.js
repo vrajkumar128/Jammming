@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Playlist.css';
 import { TrackList } from '../TrackList/TrackList';
-import { DragDropContext } from 'react-beautiful-dnd';
 
 export class Playlist extends React.Component {
   constructor(props) {
@@ -13,10 +12,6 @@ export class Playlist extends React.Component {
   // Update parent's state with new playlist name
   handleChange(e) {
     this.props.onChange(e.target.value);
-  }
-
-  onDragEnd = () => {
-    // the only one that is required
   }
 
   render() {
@@ -30,13 +25,11 @@ export class Playlist extends React.Component {
           onChange={this.handleChange}
         />
         <div className="Playlist-tracks">
-          <DragDropContext onDragEnd={this.onDragEnd}>
             <TrackList
               tracks={this.props.playlistTracks}
               onRemove={this.props.onRemove}
               isRemoval={true}
             />
-          </DragDropContext>
         </div>
         <a className="Playlist-save" onClick={this.props.onSave}>SAVE TO SPOTIFY</a>
       </div>
