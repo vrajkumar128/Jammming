@@ -2,6 +2,10 @@
   width: 100%;
 }
 
-.TrackList li {
+.TrackList > div > div {
   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.TrackList > div > div:last-child {
+  border-bottom: none;
 }
