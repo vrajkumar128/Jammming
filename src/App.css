@@ -1,7 +1,8 @@
 body,
 html,
-#root {
-  height: 100%;
+#root,
+#root > div {
+  height: 100vh;
 }
 
 html {
@@ -28,7 +29,7 @@ h2 {
 }
 
 .App {
-  height: 100vh;
+  height: 100%;
   padding: 0 17% 10% 17%;
   background-image: url('./background_photo_desktop.jpg');
   background-size: cover;
@@ -38,6 +39,29 @@ h2 {
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App > div {
+  height: 100vh;
+  width: 100%;
+}
+
+.Connect {
+  cursor: pointer;
+  width: 10rem;
+  padding: .77rem;
+  border-radius: 54px;
+  background-color: #010c3f;
+  text-align: center;
+  font-size: .833rem;
+  transition: background-color .25s;
+}
+
+.Connect:hover {
+  background-color: rgba(108, 65, 233, .7);
 }
 
 .App-playlist {
