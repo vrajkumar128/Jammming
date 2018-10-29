@@ -38,7 +38,7 @@ export const Spotify = {
       });
       if (response.ok) {
         let jsonResponse = await response.json();
-        console.log(jsonResponse);
+        return jsonResponse;
       } else {
         console.error('Request Failed!');
         console.log(response);

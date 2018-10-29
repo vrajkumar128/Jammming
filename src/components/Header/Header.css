@@ -1,0 +1,27 @@
+.header {
+  padding: .77rem 0;
+  background-color: #010c3f;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.88rem;
+  color: #fff;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+}
+
+.user {
+  position: absolute !important;
+  right: 1rem;
+  font-size: 16px;
+  width: 33%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userPic {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  margin-right: 7.5px;
+}

@@ -4,8 +4,9 @@ import { SearchBar } from './components/SearchBar/SearchBar';
 import { SearchResults } from './components/SearchResults/SearchResults';
 import { Playlist } from './components/Playlist/Playlist';
 import { Spotify } from './util/Spotify';
+import Header from './components/Header/Header';
 
-class App extends React.Component {
+class App extends React.PureComponent {
   state = {
     searchPlaceholder: "Enter A Song, Album, or Artist",
     searchInput: '',
@@ -13,14 +14,19 @@ class App extends React.Component {
     playlistNamePlaceholder: "Playlist name",
     playlistName: "",
     playlistTracks: [],
-    accessToken: null
+    accessToken: null,
+    user: null,
+    loading: true
   }
 
-  // Retrieve Spotify access token
-  componentDidMount() {
-    const accessToken = Spotify.getAccessToken();
-    this.setState({ accessToken });
-    Spotify.getUserInfo();
+  // Retrieve Spotify access token and user info
+  async componentDidMount() {
+    const [accessToken, user] = await Promise.all([
+      Spotify.getAccessToken(),
+      Spotify.getUserInfo()
+    ]);
+
+    this.setState({ accessToken, user });
   }
 
   // Update state to reflect search input
@@ -119,11 +125,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { accessToken } = this.state;
+    const { accessToken, user } = this.state;
 
     return (
       <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <Header user={user} />
         <div className="App">
           {!accessToken
             ? <a className="Connect" role="button" onClick={() => Spotify.connect()}>CONNECT TO SPOTIFY</a>
