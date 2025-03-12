@@ -8,15 +8,19 @@
   cursor: default;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .user {
   position: absolute !important;
   right: 1rem;
   font-size: 16px;
-  width: 33%;
+  width: auto;
+  max-width: 200px;
   display: flex;
   justify-content: flex-end;
+  z-index: 10;
+  margin-right: 10px;
 }
 
 .userPic {
@@ -24,4 +28,22 @@
   height: 32px;
   border-radius: 100%;
   margin-right: 7.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.select__control {
+  margin-right: 10px !important;
+}
+
+.select__value-container {
+  margin-right: 8px !important;
+}
+
+.select__placeholder {
+  display: flex !important;
+  align-items: center !important;
+  padding-right: 10px !important;
 }

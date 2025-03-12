@@ -4,57 +4,40 @@ import './TrackList.css';
 import { Track } from '../Track/Track';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 export class TrackList extends React.Component {
-  state = {
-    tracks: null
-  }
 
-  componentDidUpdate(nextProps) {
-    if (nextProps !== this.props) {
-      const { tracks } = this.props;
-      this.setState({ tracks });
-    }
-  }
-
+  // Handle drag-and-drop
   onDragEnd = (result) => {
-    // dropped outside the list
-    if (!result.destination) {
+    if (!result.destination) { // Dropped outside the droppable area
       return;
     }
 
-    const tracks = reorder(
-      this.state.tracks,
-      result.source.index,
-      result.destination.index
-    );
-
-    this.setState({
-      tracks
-    });
+    if (this.props.onReorder && typeof this.props.onReorder === 'function') {
+      this.props.onReorder(result.source.index, result.destination.index);
+    }
   }
 
   render() {
-    const { tracks } = this.state;
+    const tracks = this.props.tracks || [];
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <ul className="TrackList">
           <Droppable droppableId="droppable">
             {(provided, snapshot) => (
-              <div ref={provided.innerRef}>
-                {tracks && tracks.map((track, index) => (
-                  <Draggable key={track.id} draggableId={track.id} index={index}>
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {tracks.map((track, index) => (
+                  <Draggable
+                    key={track.id}
+                    draggableId={track.id}
+                    index={index}
+                    isDragDisabled={!this.props.onReorder}
+                  >
                     {(provided, snapshot) => (
-                        <div
+                      <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
@@ -64,13 +47,14 @@ export class TrackList extends React.Component {
                             track={track}
                             onAdd={this.props.onAdd}
                             onRemove={this.props.onRemove}
-                            isRemoval={this.props.isRemoval} 
+                            isRemoval={this.props.isRemoval}
                           />
                         </li>
                       </div>
                     )}
                   </Draggable>
                 ))}
+                {provided.placeholder}
               </div>
             )}
           </Droppable>
@@ -84,5 +68,6 @@ TrackList.propTypes = {
   tracks: PropTypes.array.isRequired,
   onAdd: PropTypes.func,
   onRemove: PropTypes.func,
+  onReorder: PropTypes.func,
   isRemoval: PropTypes.bool.isRequired
 };
