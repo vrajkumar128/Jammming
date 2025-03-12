@@ -13,14 +13,14 @@
 
 .user {
   position: absolute !important;
-  right: 1rem;
+  right: 15px !important;
   font-size: 16px;
   width: auto;
   max-width: 200px;
   display: flex;
   justify-content: flex-end;
   z-index: 10;
-  margin-right: 10px;
+  cursor: pointer;
 }
 
 .userPic {
@@ -34,16 +34,6 @@
   overflow: hidden;
 }
 
-.select__control {
-  margin-right: 10px !important;
-}
-
-.select__value-container {
-  margin-right: 8px !important;
-}
-
-.select__placeholder {
-  display: flex !important;
-  align-items: center !important;
-  padding-right: 10px !important;
+.select__menu {
+  margin-left: -90px !important;
 }

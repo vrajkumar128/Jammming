@@ -8,15 +8,19 @@ const options = [
   { value: 2, label: 'Disconnect from Spotify' }
 ];
 
-// Styles for dropdown
+// Dropdown styles
 const selectStyles = {
   control: () => ({
     display: 'flex',
     backgroundColor: 'transparent',
-    border: 'none'
+    border: 'none',
+    cursor: 'pointer'
   }),
   indicatorSeparator: () => ({
     display: 'none'
+  }),
+  dropdownIndicator: () => ({
+    display: 'none' // Hide dropdown arrow
   }),
   option: (baseStyles) => ({
     ...baseStyles,
