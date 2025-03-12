@@ -7,13 +7,25 @@ export const Spotify = {
     const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
     const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
 
+    // Check if token exists and validate expiration
     if (localStorage.getItem('accessToken')) {
+      const expirationTime = localStorage.getItem('expirationTime');
+
+      // If token exists but expired, clear storage
+      if (expirationTime && Date.now() > parseInt(expirationTime)) {
+        localStorage.clear();
+        return null;
+      }
+
       return localStorage.getItem('accessToken');
     } else if (accessTokenMatch && expiresInMatch) {
       const accessToken = accessTokenMatch[1];
+      const expiresIn = Number(expiresInMatch[1]);
+
+      // Store token with expiration time
       localStorage.setItem('accessToken', accessToken);
-      let expiresIn = Number(expiresInMatch[1]);
-      window.setTimeout(() => localStorage.clear(), expiresIn * 1000);
+      localStorage.setItem('expirationTime', Date.now() + (expiresIn * 1000));
+
       window.history.replaceState('Access Token', null, '/');
       return accessToken;
     } else {
