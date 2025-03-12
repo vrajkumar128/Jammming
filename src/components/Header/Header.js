@@ -5,12 +5,12 @@ import Select from 'react-select';
 // Options for dropdown
 const options = [
   { value: 1, label: 'Go to Spotify' },
-  { value: 2, label: 'Disconnect from Spotify'}
+  { value: 2, label: 'Disconnect from Spotify' }
 ];
 
 // Styles for dropdown
 const selectStyles = {
-  control: () => ({ 
+  control: () => ({
     display: 'flex',
     backgroundColor: 'transparent',
     border: 'none'
@@ -37,7 +37,11 @@ const selectStyles = {
 // Placeholder for dropdown
 const placeholder = (user) => (
   <Fragment>
-    <img className="userPic" src={user.images[0].url} alt="Thumbnail of logged-in user's avatar" />
+    {user.images && user.images.length > 0 ? (
+      <img className="userPic" src={user.images[0].url} />
+    ) : (
+      <div className="userPic" style={{ backgroundColor: "#6c41ec" }}></div>
+    )}
     <span>{user.display_name}</span>
   </Fragment>
 );
@@ -46,7 +50,7 @@ const placeholder = (user) => (
 const renderAuthedUser = (user) => (
   <Select
     value={user.display_name}
-    className="user" 
+    className="user"
     classNamePrefix="select"
     isSearchable={false}
     placeholder={placeholder(user)}

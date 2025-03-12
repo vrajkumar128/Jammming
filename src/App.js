@@ -51,11 +51,10 @@ class App extends React.PureComponent {
 
   // Update state to reflect adding a new track to playlist
   addTrack = (track) => {
-    let playlistTracks = this.state.playlistTracks;
+    // Create a new array to ensure React detects the change
+    let playlistTracks = [...this.state.playlistTracks];
 
-    if (playlistTracks.find(playlistTrack => playlistTrack.id === track.id)) {
-      return;
-    } else {
+    if (!playlistTracks.find(playlistTrack => playlistTrack.id === track.id)) {
       playlistTracks.push(track);
       this.setState({
         playlistTracks: playlistTracks
@@ -65,9 +64,22 @@ class App extends React.PureComponent {
 
   // Update state to reflect removing a track from playlist
   removeTrack = (track) => {
-    let filteredPlaylistTracks = this.state.playlistTracks.filter(playlistTrack => playlistTrack.id !== track.id);
+    let filteredPlaylistTracks = this.state.playlistTracks.filter(
+      playlistTrack => playlistTrack.id !== track.id
+    );
     this.setState({
       playlistTracks: filteredPlaylistTracks
+    });
+  }
+
+  // Handle track drag-and-drop reordering in playlist
+  reorderPlaylistTracks = (startIndex, endIndex) => {
+    const result = Array.from(this.state.playlistTracks);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    this.setState({
+      playlistTracks: result
     });
   }
 
@@ -134,33 +146,34 @@ class App extends React.PureComponent {
           {!accessToken
             ? <a className="Connect" role="button" onClick={() => Spotify.connect()}>CONNECT TO SPOTIFY</a>
             : (
-                <div>
-                  <SearchBar
-                    searchPlaceholder={this.state.searchPlaceholder}
-                    searchInput={this.state.searchInput}
-                    onChange={this.updateSearchInput}
-                    onSearch={this.search}
+              <div>
+                <SearchBar
+                  searchPlaceholder={this.state.searchPlaceholder}
+                  searchInput={this.state.searchInput}
+                  onChange={this.updateSearchInput}
+                  onSearch={this.search}
+                />
+                <div className="App-playlist">
+                  <SearchResults
+                    searchResults={this.state.searchResults}
+                    onClear={this.clearSearchResults}
+                    onAdd={this.addTrack}
                   />
-                  <div className="App-playlist">
-                    <SearchResults
-                      searchResults={this.state.searchResults}
-                      onClear={this.clearSearchResults}
-                      onAdd={this.addTrack}
-                    />
-                    <Playlist
-                      playlistPlaceholder={this.state.playlistNamePlaceholder}
-                      onFocus={this.clearPlaylistNamePlaceholder}
-                      onBlur={this.restorePlaylistNamePlaceholder}
-                      playlistName={this.state.playlistName}
-                      onChange={this.updatePlaylistName}
-                      playlistTracks={this.state.playlistTracks}
-                      onRemove={this.removeTrack}
-                      onSave={this.savePlaylist}
-                    />
-                  </div>
+                  <Playlist
+                    playlistPlaceholder={this.state.playlistNamePlaceholder}
+                    onFocus={this.clearPlaylistNamePlaceholder}
+                    onBlur={this.restorePlaylistNamePlaceholder}
+                    playlistName={this.state.playlistName}
+                    onChange={this.updatePlaylistName}
+                    playlistTracks={this.state.playlistTracks}
+                    onRemove={this.removeTrack}
+                    onSave={this.savePlaylist}
+                    onReorder={this.reorderPlaylistTracks}
+                  />
                 </div>
-              )
-            }
+              </div>
+            )
+          }
         </div>
       </div>
     );

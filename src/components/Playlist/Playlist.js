@@ -25,11 +25,12 @@ export class Playlist extends React.Component {
           onChange={this.handleChange}
         />
         <div className="Playlist-tracks">
-            <TrackList
-              tracks={this.props.playlistTracks}
-              onRemove={this.props.onRemove}
-              isRemoval={true}
-            />
+          <TrackList
+            tracks={this.props.playlistTracks}
+            onRemove={this.props.onRemove}
+            onReorder={this.props.onReorder}
+            isRemoval={true}
+          />
         </div>
         <a className="Playlist-save" onClick={this.props.onSave}>SAVE TO SPOTIFY</a>
       </div>
@@ -44,5 +45,6 @@ Playlist.propTypes = {
   playlistName: PropTypes.string.isRequired,
   playlistTracks: PropTypes.array.isRequired,
   onRemove: PropTypes.func.isRequired,
+  onReorder: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired
 }
