@@ -34,11 +34,23 @@ const selectStyles = {
   })
 };
 
+// Handle option selection
+const handleOptionChange = (option) => {
+  if (option.value === 1) {
+    // Go to Spotify
+    window.open('https://open.spotify.com', '_blank');
+  } else if (option.value === 2) {
+    // Disconnect from Spotify
+    localStorage.clear();
+    window.location.href = '/';
+  }
+};
+
 // Placeholder for dropdown
 const placeholder = (user) => (
   <Fragment>
     {user.images && user.images.length > 0 ? (
-      <img className="userPic" src={user.images[0].url} />
+      <img className="userPic" src={user.images[0].url} alt="Thumbnail of logged-in user's avatar" />
     ) : (
       <div className="userPic" style={{ backgroundColor: "#6c41ec" }}></div>
     )}
@@ -56,6 +68,7 @@ const renderAuthedUser = (user) => (
     placeholder={placeholder(user)}
     options={options}
     styles={selectStyles}
+    onChange={handleOptionChange}
   />
 );
 
