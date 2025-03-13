@@ -8,79 +8,126 @@ const options = [
   { value: 2, label: 'Disconnect from Spotify' }
 ];
 
-// Dropdown styles
-const selectStyles = {
-  control: () => ({
-    display: 'flex',
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer'
-  }),
-  indicatorSeparator: () => ({
-    display: 'none'
-  }),
-  dropdownIndicator: () => ({
-    display: 'none' // Hide dropdown arrow
-  }),
-  option: (baseStyles) => ({
-    ...baseStyles,
-    color: 'black'
-  }),
-  placeholder: (baseStyles) => ({
-    ...baseStyles,
-    color: 'white',
-    display: 'flex',
-    alignItems: 'center'
-  }),
-  menu: (baseStyles) => ({
-    ...baseStyles,
-    width: '10rem'
-  })
-};
-
 // Handle option selection
 const handleOptionChange = (option) => {
   if (option.value === 1) {
-    // Go to Spotify
     window.open('https://open.spotify.com', '_blank');
   } else if (option.value === 2) {
-    // Disconnect from Spotify
     localStorage.clear();
     window.location.href = '/';
   }
 };
 
-// Placeholder for dropdown
-const placeholder = (user) => (
-  <Fragment>
-    {user.images && user.images.length > 0 ? (
-      <img className="userPic" src={user.images[0].url} alt="Thumbnail of logged-in user's avatar" />
-    ) : (
-      <div className="userPic" style={{ backgroundColor: "#6c41ec" }}></div>
-    )}
-    <span>{user.display_name}</span>
-  </Fragment>
-);
+// Select component that either shows profile pic or default dropdown
+const UserDropdown = ({ user }) => {
+  const hasProfilePic = user.images && user.images.length > 0;
 
-// Display the current user
-const renderAuthedUser = (user) => (
-  <Select
-    value={user.display_name}
-    className="user"
-    classNamePrefix="select"
-    isSearchable={false}
-    placeholder={placeholder(user)}
-    options={options}
-    styles={selectStyles}
-    onChange={handleOptionChange}
-  />
-);
+  const profilePicStyles = {
+    control: () => ({
+      display: 'flex',
+      backgroundColor: 'transparent',
+      border: 'none',
+      minWidth: '120px'
+    }),
+    indicatorSeparator: () => ({
+      display: 'none'
+    }),
+    dropdownIndicator: () => ({
+      display: 'none' // Hide arrow when showing profile pic
+    }),
+    option: (baseStyles) => ({
+      ...baseStyles,
+      color: 'black'
+    }),
+    placeholder: (baseStyles) => ({
+      ...baseStyles,
+      color: 'white',
+      display: 'flex',
+      alignItems: 'center'
+    }),
+    menu: (baseStyles) => ({
+      ...baseStyles,
+      width: '10rem'
+    }),
+    container: (baseStyles) => ({
+      ...baseStyles,
+      minWidth: '150px'
+    })
+  };
+
+  const arrowStyles = {
+    control: () => ({
+      display: 'flex',
+      backgroundColor: 'transparent',
+      border: 'none',
+      minWidth: '150px'
+    }),
+    indicatorSeparator: () => ({
+      display: 'none'
+    }),
+    option: (baseStyles) => ({
+      ...baseStyles,
+      color: 'black'
+    }),
+    placeholder: (baseStyles) => ({
+      ...baseStyles,
+      color: 'white',
+      display: 'flex',
+      alignItems: 'center',
+      paddingRight: '25px'
+    }),
+    menu: (baseStyles) => ({
+      ...baseStyles,
+      width: '10rem'
+    }),
+    container: (baseStyles) => ({
+      ...baseStyles,
+      minWidth: '150px'
+    })
+  };
+
+  // Either show user's profile picture or their username and a dropdown arrow
+  if (hasProfilePic) {
+    return (
+      <Select
+        value={user.display_name}
+        className="user"
+        classNamePrefix="select"
+        isSearchable={false}
+        placeholder={
+          <Fragment>
+            <div className="userPic">
+              <img src={user.images[0].url} alt="Thumbnail of logged-in user's avatar" />
+            </div>
+            <span>{user.display_name}</span>
+          </Fragment>
+        }
+        options={options}
+        styles={profilePicStyles}
+        onChange={handleOptionChange}
+      />
+    );
+  } else {
+    return (
+      <Select
+        value={user.display_name}
+        className="user"
+        classNamePrefix="select"
+        isSearchable={false}
+        placeholder={<span className="username-with-space">{user.display_name}</span>}
+        options={options}
+        styles={arrowStyles}
+        onChange={handleOptionChange}
+      />
+    );
+  }
+};
 
 // Header component
 const Header = ({ user }) => (
   <div className="header">
     <h1>Ja<span className="highlight">mmm</span>ing</h1>
-    {user && renderAuthedUser(user)}
+    {user && <UserDropdown user={user} />}
   </div>
 );
 
