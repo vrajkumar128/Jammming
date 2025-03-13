@@ -6,6 +6,12 @@ html,
   padding: 0;
 }
 
+@media only screen and (min-width: 1021px) {
+  body {
+    overflow: hidden;
+  }
+}
+
 body.disconnected {
   overflow: hidden !important;
 }
@@ -52,7 +58,7 @@ h2 {
   margin-top: 0 !important;
 }
 
-.App.connected > div {
+.App.connected>div {
   width: 100%;
   height: 100%;
 }
@@ -88,6 +94,10 @@ h2 {
 }
 
 @media only screen and (max-width: 1020px) {
+  body {
+    overflow: auto;
+  }
+
   .App.connected {
     padding: 77px 5% 10% 5%;
     overflow-y: auto !important;

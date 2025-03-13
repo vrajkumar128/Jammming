@@ -13,13 +13,22 @@
   display: inline;
 }
 
+.SearchResults-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
 .SearchResults span {
-  float: right;
   text-transform: uppercase;
   cursor: pointer;
   font-size: 0.75rem;
-  vertical-align: middle;
   color: rgba(255, 255, 255, 0.6);
+  position: absolute;
+  right: 0;
+  top: 2px;
 }
 
 .Results {
@@ -38,4 +47,17 @@
 .Results::-webkit-scrollbar-thumb {
   background: #6c41ec;
   border-radius: 5px;
+}
+
+@media only screen and (max-width: 1020px) {
+  .SearchResults {
+    width: 90%;
+    height: 350px;
+    margin-bottom: 2rem;
+  }
+
+  .Results {
+    max-height: 280px;
+    overflow-y: auto;
+  }
 }
