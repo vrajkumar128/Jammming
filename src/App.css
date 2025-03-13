@@ -4,6 +4,7 @@ html,
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-anchor: none;
 }
 
 @media only screen and (min-width: 1021px) {
@@ -40,6 +41,7 @@ h2 {
   font-weight: 500;
   color: #fff;
   padding-top: 77px;
+  position: relative;
 }
 
 .App.connected {
@@ -95,12 +97,16 @@ h2 {
 
 @media only screen and (max-width: 1020px) {
   body {
-    overflow: auto;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    height: auto !important;
   }
 
   .App.connected {
     padding: 77px 5% 10% 5%;
     overflow-y: auto !important;
+    min-height: 100vh;
+    height: auto;
   }
 
   .App.disconnected {
