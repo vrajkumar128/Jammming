@@ -51,7 +51,6 @@ class App extends React.PureComponent {
 
   // Update state to reflect adding a new track to playlist
   addTrack = (track) => {
-    // Create a new array to ensure React detects the change
     let playlistTracks = [...this.state.playlistTracks];
 
     if (!playlistTracks.find(playlistTrack => playlistTrack.id === track.id)) {
@@ -138,11 +137,12 @@ class App extends React.PureComponent {
 
   render() {
     const { accessToken, user } = this.state;
+    const appClassName = accessToken ? 'App' : 'App disconnected';
 
     return (
       <div>
         <Header user={user} />
-        <div className="App">
+        <div className={appClassName}>
           {!accessToken
             ? <a className="Connect" role="button" onClick={() => Spotify.connect()}>CONNECT TO SPOTIFY</a>
             : (
