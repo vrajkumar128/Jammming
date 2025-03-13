@@ -6,8 +6,10 @@ import { TrackList } from '../TrackList/TrackList';
 export const SearchResults = props => {
   return (
     <div className="SearchResults">
-      <h2>Search Results</h2>
-      {props.searchResults.length > 0 && <span onClick={props.onClear}>Clear</span>}
+      <div className="SearchResults-header">
+        <h2>Search Results</h2>
+        {props.searchResults.length > 0 && <span onClick={props.onClear}>Clear</span>}
+      </div>
       <div className="Results">
         <TrackList tracks={props.searchResults} onAdd={props.onAdd} isRemoval={false} />
       </div>
@@ -17,5 +19,6 @@ export const SearchResults = props => {
 
 SearchResults.propTypes = {
   searchResults: PropTypes.array.isRequired,
-  onAdd: PropTypes.func.isRequired
+  onAdd: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired
 };
