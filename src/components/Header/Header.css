@@ -19,8 +19,11 @@
   max-width: 200px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   z-index: 10;
   cursor: pointer;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
 }
 
 .select__placeholder span {
@@ -32,4 +35,39 @@
 
 .select__menu {
   margin-left: -90px !important;
+}
+
+.select__dropdown-indicator svg {
+  fill: white !important;
+}
+
+@media only screen and (max-width: 1020px) {
+  .select__placeholder span {
+    display: none;
+  }
+
+  .user {
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+  }
+
+  .select__dropdown-indicator {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: white !important;
+  }
+
+  .select__dropdown-indicator svg {
+    display: block !important;
+    fill: white !important;
+    color: white !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .select__menu {
+    margin-left: -100px !important;
+  }
 }
