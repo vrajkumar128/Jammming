@@ -8,7 +8,12 @@
   cursor: default;
   display: flex;
   justify-content: center;
-  position: relative;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
 }
 
 .user {
@@ -24,6 +29,10 @@
   cursor: pointer;
   top: 50% !important;
   transform: translateY(-50%) !important;
+}
+
+.user:hover {
+  opacity: 0.8;
 }
 
 .select__placeholder span {
@@ -65,9 +74,5 @@
     color: white !important;
     visibility: visible !important;
     opacity: 1 !important;
-  }
-
-  .select__menu {
-    margin-left: -100px !important;
   }
 }

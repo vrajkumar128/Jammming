@@ -137,7 +137,7 @@ class App extends React.PureComponent {
 
   render() {
     const { accessToken, user } = this.state;
-    const appClassName = accessToken ? 'App' : 'App disconnected';
+    const appClassName = accessToken ? 'App connected' : 'App disconnected';
 
     return (
       <div>
