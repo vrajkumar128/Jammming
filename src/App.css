@@ -1,9 +1,13 @@
 body,
 html,
-#root,
-#root>div {
+#root {
   height: 100%;
-  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body.disconnected {
+  overflow: hidden !important;
 }
 
 html {
@@ -20,9 +24,7 @@ h2 {
 }
 
 .App {
-  height: 100%;
   min-height: 100vh;
-  padding: 0 17% 10% 17%;
   background-image: url('./background_photo_desktop.jpg');
   background-size: cover;
   background-position: center;
@@ -31,40 +33,45 @@ h2 {
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
+  padding-top: 77px;
+}
+
+.App.connected {
+  padding: 77px 17% 10% 17%;
+  overflow: hidden;
 }
 
 .App.disconnected {
-  overflow: hidden;
-  height: calc(100vh - 77px);
+  overflow: hidden !important;
+  position: relative;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
 }
 
-.App>div {
-  height: 100%;
-  min-height: 100vh;
+.App.connected > div {
   width: 100%;
+  height: 100%;
 }
 
-.Connect {
-  cursor: pointer;
+.App.disconnected .Connect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: .77rem 0;
   width: 10rem;
-  padding: .77rem;
-  border-radius: 54px;
   background-color: #010c3f;
+  border-radius: 54px;
+  cursor: pointer;
   text-align: center;
   font-size: .833rem;
   transition: background-color .25s;
-  position: relative;
-  margin: 0;
-  top: 0;
-  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   z-index: 5;
 }
 
@@ -81,26 +88,14 @@ h2 {
 }
 
 @media only screen and (max-width: 1020px) {
-  .App {
-    min-height: 100vh;
-    height: auto;
-    padding: 0 5% 10% 5%;
+  .App.connected {
+    padding: 77px 5% 10% 5%;
+    overflow-y: auto !important;
   }
 
   .App.disconnected {
-    height: calc(100vh - 77px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-  }
-
-  .App>div {
-    min-height: 100vh;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100vh;
+    overflow: hidden !important;
   }
 
   .App-playlist {

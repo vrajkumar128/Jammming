@@ -3,6 +3,9 @@
   padding: .88rem;
   background-color: rgba(1, 12, 63, 0.7);
   box-shadow: 0 2px 2px 2px #000000;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
 }
 
 .SearchResults h2 {
@@ -21,8 +24,9 @@
 
 .Results {
   margin-top: 1rem;
-  max-height: 90%;
+  flex-grow: 1;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .Results::-webkit-scrollbar {
@@ -34,11 +38,4 @@
 .Results::-webkit-scrollbar-thumb {
   background: #6c41ec;
   border-radius: 5px;
-}
-
-@media only screen and (max-width: 1020px) {
-  .SearchResults {
-    width: 90%;
-    margin-bottom: 2rem;
-  }
 }
