@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 37%;
-  padding: 0.45rem 1.16rem;
+  padding: 0.88rem;
   background-color: rgba(1, 12, 63, 0.7);
   box-shadow: 0 2px 2px 2px #000000;
   height: 450px;
@@ -56,21 +56,14 @@
 }
 
 @media only screen and (max-width: 1020px) {
-
-  .SearchResults,
   .Playlist {
     width: 90%;
     height: 350px;
     margin-bottom: 2rem;
   }
 
-  .Results,
   .Playlist-tracks {
     max-height: 280px;
     overflow-y: auto;
-  }
-
-  .App.connected {
-    overflow-y: auto !important;
   }
 }
