@@ -26,7 +26,40 @@ class App extends React.PureComponent {
       Spotify.getUserInfo()
     ]);
 
-    this.setState({ accessToken, user });
+    this.setState({ accessToken, user }, () => {
+      if (!accessToken) {
+        document.body.classList.add('disconnected');
+      } else {
+        document.body.classList.remove('disconnected');
+      }
+    });
+
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    document.body.classList.remove('disconnected');
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  // Handle switching between mobile and desktop views
+  handleResize = () => {
+    const isMobileView = window.innerWidth <= 1020;
+    const wasInMobileView = this._lastViewportWidth && this._lastViewportWidth <= 1020;
+
+    if (isMobileView !== wasInMobileView) {
+      window.scrollTo(0, 0);
+
+      if (isMobileView) {
+        document.body.style.overflow = 'auto';
+      } else {
+        if (this.state.accessToken) {
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    }
+
+    this._lastViewportWidth = window.innerWidth;
   }
 
   // Update state to reflect search input
@@ -140,7 +173,7 @@ class App extends React.PureComponent {
     const appClassName = accessToken ? 'App connected' : 'App disconnected';
 
     return (
-      <div>
+      <React.Fragment>
         <Header user={user} />
         <div className={appClassName}>
           {!accessToken
@@ -175,7 +208,7 @@ class App extends React.PureComponent {
             )
           }
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
