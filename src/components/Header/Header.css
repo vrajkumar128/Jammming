@@ -8,12 +8,12 @@
   cursor: default;
   display: flex;
   justify-content: center;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 10;
+  box-sizing: border-box;
 }
 
 .user {
@@ -31,28 +31,68 @@
   transform: translateY(-50%) !important;
 }
 
-.user:hover {
-  opacity: 0.8;
+.select__placeholder {
+  padding-right: 0 !important;
+  margin-right: 0 !important;
 }
 
 .select__placeholder span {
-  margin-right: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.6 !important;
+  vertical-align: middle !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.select__dropdown-indicator {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.select__dropdown-indicator svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.select__control {
+  line-height: normal !important;
+}
+
+.select__control:hover,
+.select__control--menu-is-open {
+  opacity: 0.8 !important;
+}
+
+.select__value-container {
+  align-items: center !important;
+  justify-content: end !important;
+  padding-right: 6px !important;
 }
 
 .select__menu {
   margin-left: -90px !important;
 }
 
-.select__dropdown-indicator svg {
-  fill: white !important;
+.select__option:hover {
+  opacity: 1 !important;
 }
 
 @media only screen and (max-width: 1020px) {
   .select__placeholder span {
-    display: none;
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0 !important;
   }
 
   .user {
